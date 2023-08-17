@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "bootstrap-icons": "^1.10.5",
     "element-plus": "^2.3.9",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",

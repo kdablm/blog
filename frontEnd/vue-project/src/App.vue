@@ -1,11 +1,15 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import NavigationBarComponetVue from './components/NavigationBarComponet.vue'
+import {ref} from 'vue'
+
+// 主题样式
+let isLight=ref(true)
 </script>
 
 <template>
-    <div class="bg">
-        <NavigationBarComponetVue></NavigationBarComponetVue>
+    <div class="bg" :class="{dark:isLight}">
+        <NavigationBarComponetVue v-model:isLight="isLight"></NavigationBarComponetVue>
         <routerView></routerView>
     </div>
 </template>
