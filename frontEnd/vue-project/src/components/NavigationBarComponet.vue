@@ -11,48 +11,82 @@
             </el-col>
             <el-col :span="12">
                 <ul class="navbar">
-                    <li class="nav_item">首页</li>
-                    <li class="nav_item">文章</li>
-                    <li class="nav_item">发现</li>
-                    <li class="nav_item">我的</li>
+                    <li class="nav_item" @mouseleave="mouserOut(1, $event)" @mouseenter="mouserIn(1, $event)">
+                        <span :class="{ 'in': inIndex == 1, 'out': outIndex == 1 }"></span>
+                        <span>首页</span>
+                    </li>
+                    <li class="nav_item" @mouseleave="mouserOut(2, $event)" @mouseenter="mouserIn(2, $event)">
+                        <span :class="{ 'in': inIndex == 2, 'out': outIndex == 2 }"></span>
+                        <span>文章</span>
+                    </li>
+                    <li class="nav_item" @mouseleave="mouserOut(3, $event)" @mouseenter="mouserIn(3, $event)">
+                        <span :class="{ 'in': inIndex == 3, 'out': outIndex == 3 }"></span>
+                        <span>发现</span>
+                    </li>
+                    <li class="nav_item" @mouseleave="mouserOut(4, $event)" @mouseenter="mouserIn(4, $event)">
+                        <span :class="{ 'in': inIndex == 4, 'out': outIndex == 4 }"></span>
+                        <span>我的</span>
+                    </li>
                 </ul>
             </el-col>
             <el-col :span="6">
-                <ul class="navbar toolBox">
-                    <li class="nav_item theme" @click="changeLight()">
-                        <svg v-if="isLight" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-sun-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
-                        </svg>
-                        <el-icon v-else>
-                            <Moon />
-                        </el-icon>
+                <ul class=" toolBox">
+                    <li class="tool_item">
+                        <i v-if="counterStore.isDark" @click="counterStore.changeThem();"
+                            class="bi theme_dark bi-moon-stars-fill"></i>
+                        <i v-else @click="counterStore.changeThem();" class="bi theme_light bi-brightness-high-fill"></i>
                     </li>
-                    <li class="nav_item">搜索</li>
-                    <li class="nav_item">设置</li>
+                    <li class="tool_item search">
+                        <i @click="showSearchDialong()" class="bi bi-search"></i>
+                    </li>
+                    <li class="tool_item setting">
+                        <i class="bi bi-sliders"></i>
+                    </li>
                 </ul>
             </el-col>
         </el-row>
+        <el-dialog v-model="isSearch" title="搜索" center>
+            <el-input v-model="input1" class="w-50 m-2" placeholder="Pick a date" :suffix-icon="Calendar" />
+        </el-dialog>
     </div>
 </template>
 <script setup>
 import { ref } from "vue";
-// 父组件传参
-let props = defineProps({
-    isLight: {
-        default: true,
-        type: Boolean
+import { useCounterStore } from "../stores/counter";
+const counterStore = useCounterStore();
+// 鼠标移入效果
+let inIndex = ref(0);
+let outIndex = ref(0);
+let inX = ref(0);
+let inY = ref(0);
+let outX = ref(0), outY = ref(0);
+let t = null;
+//鼠标移入效果
+function mouserIn(index, e) {
+    if (t != null) {
+        clearTimeout(t)
     }
-})
-// 
-let emit=defineEmits(["update:isLight"])
-// 日夜模式
-let isLight = ref(props.isLight);
-function changeLight() {
-    console.log(isLight.value);
-    emit("update:isLight",!isLight.value);
-    isLight.value = !isLight.value;
+    inIndex.value = index
+    inX.value = e.offsetX + "px"
+    inY.value = e.offsetY + "px"
+}
+// 鼠标移出效果
+function mouserOut(index, e) {
+    if (t != null) {
+        clearTimeout(t)
+    }
+    t = setTimeout(() => {
+        inIndex.value = 0;
+        outIndex.value = 0;
+    }, 500)
+    outIndex.value = index;
+    outX.value = e.offsetX + "px"
+    outY.value = e.offsetY + "px"
+}
+// 搜索对话框
+let isSearch = ref(false);
+function showSearchDialong() {
+    isSearch.value = true;
 }
 </script>
 
@@ -84,24 +118,110 @@ function changeLight() {
 }
 
 .nav_item {
-    margin: 0 30px;
+    text-align: center;
     font-size: 16px;
     cursor: pointer;
+    width: 100%;
+    /* height: 4vh; */
+    line-height: 4vh;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    margin: 0 5px;
+}
+
+.nav_item span {
+    /* z-index: 1; */
+    color: var(--text-color);
+}
+
+
+.nav_item span {
+    position: relative;
+    z-index: 1;
+}
+
+.nav_item {
+    position: relative;
+}
+
+.nav_item .in {
+    position: absolute;
+    left: v-bind(inX);
+    top: v-bind(inY);
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    background-color: var(--navbar-hover-color);
+    transform: translate(-50%, -50%);
+    z-index: inherit;
+    animation: in 0.5s ease-out forwards;
+}
+
+.nav_item .out {
+    position: absolute;
+    left: v-bind(outX);
+    top: v-bind(outY);
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    background-color: var(--navbar-hover-color);
+    transform: translate(-50%, -50%);
+    z-index: inherit;
+    animation: out 0.5s ease-out forwards;
+}
+
+@-webkit-keyframes in {
+    0% {
+        width: 0px;
+        height: 0px;
+    }
+
+    100% {
+        width: 500px;
+        height: 500px;
+    }
+}
+
+@-webkit-keyframes out {
+    0% {
+        width: 500px;
+        height: 500px;
+    }
+
+    100% {
+        width: 0px;
+        height: 0px;
+    }
 }
 
 .toolBox {
+    display: flex;
     justify-content: end;
+    align-items: center;
+    margin: 0;
 }
 
-.toolBox>.nav_item {
-    margin: 0 10px;
-}
-
-.theme {
-    padding-top: 5px;
+.toolBox>.tool_item {
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    width: 50px;
+    /* height: 4vh; */
+    line-height: 4vh;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    /* margin: 0 5px; */
 }
 
 .theme_light {
     color: #eebe77;
+}
+
+.theme_dark {
+    color: #79bbff;
 }
 </style>

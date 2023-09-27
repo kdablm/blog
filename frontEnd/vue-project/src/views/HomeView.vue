@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height: 95vh;">
         <div class="topBox">
             <div>
                 <div class="imageBox">
@@ -12,6 +12,11 @@
                     <h2 class="userMotto">{{ motto }}</h2>
                 </div>
             </div>
+        </div>
+        <div class="iconDown">
+            <el-icon>
+                <ArrowDown />
+            </el-icon>
         </div>
     </div>
 </template>
@@ -30,7 +35,7 @@ onMounted(() => {
                 clearInterval(addMotto)
             }
         }, 200)
-    },1000)
+    }, 1000)
 })
 </script>
 <style scoped>
@@ -49,8 +54,8 @@ onMounted(() => {
 }
 
 .userImage {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     margin: 0 auto;
     animation: rotateImage 10s linear infinite;
@@ -65,7 +70,6 @@ onMounted(() => {
         transform: rotate(360deg);
     }
 }
-
 /* 用户名与座右铭 */
 .userName,
 .userMotto {
@@ -83,6 +87,7 @@ onMounted(() => {
     animation: changeUserName 1s linear;
     animation-fill-mode: forwards;
     border-radius: 15px;
+    transform: translateY(-20%);
 }
 
 @-webkit-keyframes changeUserName {
@@ -112,6 +117,7 @@ onMounted(() => {
     border-radius: 10px;
     animation: changeUserMotto 1s linear;
     animation-fill-mode: forwards;
+    transform: translateY(-100%);
 }
 
 @-webkit-keyframes changeUserMotto {
@@ -186,6 +192,31 @@ onMounted(() => {
 
     100% {
         width: 0px;
+        opacity: 0;
+    }
+}
+
+.iconDown {
+    position: absolute;
+    color: #fff;
+    font-size: 32px;
+    bottom: 0px;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: dowm 1.5s infinite;
+}
+
+@-webkit-keyframes dowm {
+    0% {
+        bottom: 20px;
+        font-size: 26px;
+        opacity: 1;
+    }
+
+    100% {
+        bottom: 0px;
+        font-size: 32px;
         opacity: 0;
     }
 }

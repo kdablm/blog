@@ -1,7 +1,8 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-
+// bootstrap icons
+import "../node_modules/bootstrap-icons/font/bootstrap-icons.css"
 // element plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'

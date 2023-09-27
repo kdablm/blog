@@ -3,13 +3,15 @@
 :root {
     /* 默认基本样式 */
     --text-color: var(--text-color-light);
-    --background-color: var(--background-color-light)
+    --background-color: var(--background-color-light);
+    --navbar-hover-color:var(--navbar-hover-color-light);
 }
 
 /* 黑夜模式 */
 .dark {
     --text-color: var(--text-color-dark);
-    --background-color: var(--background-color-dark)
+    --background-color: var(--background-color-dark);
+    --navbar-hover-color:var(--navbar-hover-color-dark);
 }
 
 ul {

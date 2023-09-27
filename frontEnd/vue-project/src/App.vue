@@ -1,15 +1,19 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import NavigationBarComponetVue from './components/NavigationBarComponet.vue'
-import {ref} from 'vue'
+import { ref } from 'vue'
 
 // 主题样式
-let isLight=ref(true)
+let isDrak = ref(true)
+// 状态库
+import { useCounterStore } from './stores/counter';
+const counterStore = useCounterStore();
+
 </script>
 
 <template>
-    <div class="bg" :class="{dark:isLight}">
-        <NavigationBarComponetVue v-model:isLight="isLight"></NavigationBarComponetVue>
+    <div class="bg" :class="{ dark: counterStore.isDark }">
+        <NavigationBarComponetVue></NavigationBarComponetVue>
         <routerView></routerView>
     </div>
 </template>
@@ -19,6 +23,7 @@ let isLight=ref(true)
     height: 100vh;
     background-image: url("./assets/img/bg.jpg");
     position: absolute;
+    background-position: center;
     background-attachment: fixed;
     top: 0;
     left: 0;
