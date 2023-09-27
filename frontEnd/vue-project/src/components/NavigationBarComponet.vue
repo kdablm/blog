@@ -46,11 +46,22 @@
             </el-col>
         </el-row>
         <el-dialog v-model="isSearch" title="搜索" center>
-            <el-input v-model="input1" class="w-50 m-2" placeholder="Pick a date" :suffix-icon="Calendar" />
+            <el-input v-model="searchText" class="w-50 m-2" placeholder="Type something" clearable>
+                <template #prefix>
+                    <el-icon class="el-input__icon">
+                        <search />
+                    </el-icon>
+                </template>
+            </el-input>
+            <el-radio-group v-model="searchType">
+                <el-radio :label="0">全部</el-radio>
+                <el-radio :label="1">文章</el-radio>
+                <el-radio :label="2">标签</el-radio>
+            </el-radio-group>
         </el-dialog>
     </div>
 </template>
-<script setup>
+<script setup >
 import { ref } from "vue";
 import { useCounterStore } from "../stores/counter";
 const counterStore = useCounterStore();
@@ -85,7 +96,11 @@ function mouserOut(index, e) {
 }
 // 搜索对话框
 let isSearch = ref(false);
+let searchText = ref(0);
+let searchType = ref("");
 function showSearchDialong() {
+    searchType.value = 0;
+    searchText.value = '';
     isSearch.value = true;
 }
 </script>
@@ -122,7 +137,6 @@ function showSearchDialong() {
     font-size: 16px;
     cursor: pointer;
     width: 100%;
-    /* height: 4vh; */
     line-height: 4vh;
     overflow: hidden;
     border-radius: 15px;
@@ -131,7 +145,6 @@ function showSearchDialong() {
 }
 
 .nav_item span {
-    /* z-index: 1; */
     color: var(--text-color);
 }
 
@@ -173,6 +186,31 @@ function showSearchDialong() {
     animation: out 0.5s ease-out forwards;
 }
 
+/* 动画 兼容 */
+@-moz-keyframes in {
+    0% {
+        width: 0px;
+        height: 0px;
+    }
+
+    100% {
+        width: 500px;
+        height: 500px;
+    }
+}
+
+@keyframes in {
+    0% {
+        width: 0px;
+        height: 0px;
+    }
+
+    100% {
+        width: 500px;
+        height: 500px;
+    }
+}
+
 @-webkit-keyframes in {
     0% {
         width: 0px;
@@ -182,6 +220,30 @@ function showSearchDialong() {
     100% {
         width: 500px;
         height: 500px;
+    }
+}
+
+@-moz-keyframes out {
+    0% {
+        width: 500px;
+        height: 500px;
+    }
+
+    100% {
+        width: 0px;
+        height: 0px;
+    }
+}
+
+@keyframes out {
+    0% {
+        width: 500px;
+        height: 500px;
+    }
+
+    100% {
+        width: 0px;
+        height: 0px;
     }
 }
 
@@ -209,12 +271,10 @@ function showSearchDialong() {
     font-size: 16px;
     cursor: pointer;
     width: 50px;
-    /* height: 4vh; */
     line-height: 4vh;
     overflow: hidden;
     border-radius: 15px;
     position: relative;
-    /* margin: 0 5px; */
 }
 
 .theme_light {
@@ -223,5 +283,4 @@ function showSearchDialong() {
 
 .theme_dark {
     color: #79bbff;
-}
-</style>
+}</style>
