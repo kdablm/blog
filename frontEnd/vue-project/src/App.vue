@@ -6,13 +6,13 @@ import { ref } from 'vue'
 // 主题样式
 let isDrak = ref(true)
 // 状态库
-import { useCounterStore } from './stores/counter';
-const counterStore = useCounterStore();
+import { useThemeStore } from './stores/theme.js';
+const themeStore = useThemeStore();
 
 </script>
 
 <template>
-    <div class="bg" :class="{ dark: counterStore.isDark }">
+    <div class="bg" :class="{ dark: themeStore.isDark }">
         <NavigationBarComponetVue></NavigationBarComponetVue>
         <routerView></routerView>
     </div>

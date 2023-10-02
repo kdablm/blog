@@ -32,21 +32,22 @@
             <el-col :span="6">
                 <ul class=" toolBox">
                     <li class="tool_item">
-                        <i v-if="counterStore.isDark" @click="counterStore.changeThem();"
-                            class="bi theme_dark bi-moon-stars-fill"></i>
-                        <i v-else @click="counterStore.changeThem();" class="bi theme_light bi-brightness-high-fill"></i>
+                        <el-switch v-model="themeStore.isDark" :active-action-icon="MoonNight"
+                            :inactive-action-icon="Sunny"
+                            style="--el-switch-on-color: #79bbff; --el-switch-off-color: #eebe77" />
                     </li>
                     <li class="tool_item search">
-                        <i @click="showSearchDialong()" class="bi bi-search"></i>
+                        <el-button :icon="Search" @click="showSearchDialong()" circle size="small" type="success" />
                     </li>
                     <li class="tool_item setting">
-                        <i class="bi bi-sliders"></i>
+                        <el-button circle size="small" :icon="Setting" type="primary"></el-button>
                     </li>
                 </ul>
             </el-col>
         </el-row>
-        <el-dialog v-model="isSearch" title="搜索" center>
-            <el-input v-model="searchText" class="w-50 m-2" placeholder="Type something" clearable>
+        <!-- 搜索框 -->
+        <el-dialog v-model="isSearch" title="搜索" class="searchTheme" center>
+            <el-input v-model="searchText" class="w-50 m-2" placeholder="搜索" clearable>
                 <template #prefix>
                     <el-icon class="el-input__icon">
                         <search />
@@ -54,6 +55,9 @@
                 </template>
             </el-input>
             <el-radio-group v-model="searchType">
+                <el-text style="color: var(--text-color);" size="large">
+                    搜索模式：
+                </el-text>
                 <el-radio :label="0">全部</el-radio>
                 <el-radio :label="1">文章</el-radio>
                 <el-radio :label="2">标签</el-radio>
@@ -63,8 +67,10 @@
 </template>
 <script setup >
 import { ref } from "vue";
-import { useCounterStore } from "../stores/counter";
-const counterStore = useCounterStore();
+import { useThemeStore } from "../stores/theme";
+// 图标
+import { Search, Sunny, MoonNight,Setting} from "@element-plus/icons-vue"
+const themeStore = useThemeStore();
 // 鼠标移入效果
 let inIndex = ref(0);
 let outIndex = ref(0);
@@ -106,6 +112,9 @@ function showSearchDialong() {
 </script>
 
 <style scoped>
+*{
+    user-select: none;
+}
 .navBg {
     width: 100%;
     color: var(--text-color);
@@ -271,7 +280,7 @@ function showSearchDialong() {
     font-size: 16px;
     cursor: pointer;
     width: 50px;
-    line-height: 4vh;
+    /* line-height: 4vh; */
     overflow: hidden;
     border-radius: 15px;
     position: relative;
@@ -283,4 +292,5 @@ function showSearchDialong() {
 
 .theme_dark {
     color: #79bbff;
-}</style>
+}
+</style>

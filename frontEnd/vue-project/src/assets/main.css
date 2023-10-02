@@ -4,14 +4,14 @@
     /* 默认基本样式 */
     --text-color: var(--text-color-light);
     --background-color: var(--background-color-light);
-    --navbar-hover-color:var(--navbar-hover-color-light);
+    --navbar-hover-color: var(--navbar-hover-color-light);
 }
 
 /* 黑夜模式 */
 .dark {
     --text-color: var(--text-color-dark);
     --background-color: var(--background-color-dark);
-    --navbar-hover-color:var(--navbar-hover-color-dark);
+    --navbar-hover-color: var(--navbar-hover-color-dark);
 }
 
 ul {
@@ -20,4 +20,22 @@ ul {
 
 a {
     text-decoration: none;
+}
+
+/* 搜索框主题颜色 */
+.searchTheme.el-dialog {
+    background-color: var(--background-color) !important;
+    color: var(--text-color);
+}
+
+.searchTheme .el-dialog__title {
+    color: var(--text-color) !important;
+}
+
+.searchTheme .el-radio__label {
+    color: var(--text-color) !important;
+}
+
+.el-radio__input.is-checked+.el-radio__label {
+    color: var(--el-color-primary) !important;
 }

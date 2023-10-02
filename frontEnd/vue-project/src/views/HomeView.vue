@@ -43,7 +43,8 @@ onMounted(() => {
 
 /* 头部头像盒子 */
 .topBox {
-    transform: translateY(40%);
+    transform: translateY(50%);
+    user-select: none;
 }
 
 /* 头像 */
@@ -51,6 +52,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .userImage {
