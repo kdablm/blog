@@ -13,64 +13,96 @@
                 <ul class="navbar">
                     <li class="nav_item" @mouseleave="mouserOut(1, $event)" @mouseenter="mouserIn(1, $event)">
                         <span :class="{ 'in': inIndex == 1, 'out': outIndex == 1 }"></span>
-                        <span>首页</span>
+                        <span>{{ language.navigationBar.links.home }}</span>
                     </li>
                     <li class="nav_item" @mouseleave="mouserOut(2, $event)" @mouseenter="mouserIn(2, $event)">
                         <span :class="{ 'in': inIndex == 2, 'out': outIndex == 2 }"></span>
-                        <span>文章</span>
+                        <span>{{ language.navigationBar.links.post }}</span>
                     </li>
                     <li class="nav_item" @mouseleave="mouserOut(3, $event)" @mouseenter="mouserIn(3, $event)">
                         <span :class="{ 'in': inIndex == 3, 'out': outIndex == 3 }"></span>
-                        <span>发现</span>
+                        <span>{{ language.navigationBar.links.more }}</span>
                     </li>
                     <li class="nav_item" @mouseleave="mouserOut(4, $event)" @mouseenter="mouserIn(4, $event)">
                         <span :class="{ 'in': inIndex == 4, 'out': outIndex == 4 }"></span>
-                        <span>我的</span>
+                        <span>{{ language.navigationBar.links.about }}</span>
                     </li>
                 </ul>
             </el-col>
             <el-col :span="6">
                 <ul class=" toolBox">
+                    <!-- 主题切换按钮 -->
                     <li class="tool_item">
-                        <el-switch v-model="themeStore.isDark" :active-action-icon="MoonNight"
-                            :inactive-action-icon="Sunny"
+                        <el-switch v-model="themeStore.isDark" :active-action-icon="MoonNight" :inactive-action-icon="Sunny"
                             style="--el-switch-on-color: #79bbff; --el-switch-off-color: #eebe77" />
                     </li>
+                    <!-- 搜素按钮 -->
                     <li class="tool_item search">
                         <el-button :icon="Search" @click="showSearchDialong()" circle size="small" type="success" />
                     </li>
+                    <!-- 设置按钮 -->
                     <li class="tool_item setting">
-                        <el-button circle size="small" :icon="Setting" type="primary"></el-button>
+                        <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                <el-button circle size="small" :icon="Setting" type="primary"></el-button>
+                            </span>
+                            <template #dropdown>
+                                <el-dropdown-menu>
+                                    <el-dropdown-item @click="languageStore.chagneLanguage(0)">中文</el-dropdown-item>
+                                    <el-dropdown-item @click="languageStore.chagneLanguage(1)">English</el-dropdown-item>
+                                    <el-dropdown-item>更多设置</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </template>
+                        </el-dropdown>
                     </li>
                 </ul>
             </el-col>
         </el-row>
         <!-- 搜索框 -->
-        <el-dialog v-model="isSearch" title="搜索" class="searchTheme" center>
-            <el-input v-model="searchText" class="w-50 m-2" placeholder="搜索" clearable>
+        <el-dialog v-model="isSearch" :title="language.navigationBar.search.title" class="searchTheme" center>
+            <el-input v-model="searchText" type="search" @search="fn_search()" class="w-50 m-2"
+                :placeholder="language.navigationBar.search.input" clearable>
                 <template #prefix>
                     <el-icon class="el-input__icon">
                         <search />
                     </el-icon>
                 </template>
             </el-input>
-            <el-radio-group v-model="searchType">
+            <el-radio-group v-model="searchType" style="margin-top: 5px;">
                 <el-text style="color: var(--text-color);" size="large">
-                    搜索模式：
+                    {{ language.navigationBar.search.model.title }}：
                 </el-text>
-                <el-radio :label="0">全部</el-radio>
-                <el-radio :label="1">文章</el-radio>
-                <el-radio :label="2">标签</el-radio>
+                <el-radio :label="0">{{ language.navigationBar.search.model.list.all }}</el-radio>
+                <el-radio :label="1">{{ language.navigationBar.search.model.list.post }}</el-radio>
+                <el-radio :label="2">{{ language.navigationBar.search.model.list.label }}</el-radio>
             </el-radio-group>
+            <div class="searcBtnGrop">
+                <el-button type="primary" @click="fn_search()">搜索</el-button>
+                <el-button type="warning" @click="cancelBtn()">取消</el-button>
+            </div>
         </el-dialog>
     </div>
 </template>
 <script setup >
-import { ref } from "vue";
-import { useThemeStore } from "../stores/theme";
+import { reactive, ref } from "vue";
+import { useThemeStore } from "../stores/theme";//主题库
+import { useLanguageStore } from "../stores/language";//语言库
 // 图标
-import { Search, Sunny, MoonNight,Setting} from "@element-plus/icons-vue"
+import { Search, Sunny, MoonNight, Setting } from "@element-plus/icons-vue"
+import axios, { Axios } from "axios";
 const themeStore = useThemeStore();
+const languageStore = useLanguageStore();
+// 语言
+let language = reactive({
+    navigationBar: {
+        links: {},
+        search: {}
+    }
+});
+languageStore.getLanguage.then(res => {
+    language.navigationBar = { ...res.navigationBar };
+    console.log(language.navigationBar.search);
+});
 // 鼠标移入效果
 let inIndex = ref(0);
 let outIndex = ref(0);
@@ -109,12 +141,21 @@ function showSearchDialong() {
     searchText.value = '';
     isSearch.value = true;
 }
+// 搜索函数
+function fn_search() {
+    console.log(searchText.value);
+    /* 搜索函数处理 */
+    isSearch.value = false;//隐藏对话框
+}
+function cancelBtn() {
+    isSearch.value = false;//隐藏对话框
+}
 </script>
-
 <style scoped>
-*{
+* {
     user-select: none;
 }
+
 .navBg {
     width: 100%;
     color: var(--text-color);
@@ -292,5 +333,11 @@ function showSearchDialong() {
 
 .theme_dark {
     color: #79bbff;
+}
+
+.searcBtnGrop {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 </style>

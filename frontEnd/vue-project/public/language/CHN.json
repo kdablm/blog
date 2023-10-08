@@ -1,0 +1,22 @@
+{
+    "navigationBar": {
+        "links": {
+            "home": "首页",
+            "post": "文章",
+            "more": "发现",
+            "about": "我的"
+        },
+        "search": {
+            "title": "搜索",
+            "inputText": "搜索",
+            "model": {
+                "title": "搜索模式",
+                "list": {
+                    "all": "全部",
+                    "post": "文章",
+                    "label": "标签"
+                }
+            }
+        }
+    }
+}

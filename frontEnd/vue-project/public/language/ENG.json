@@ -1,0 +1,22 @@
+{
+    "navigationBar": {
+        "links": {
+            "home": "Home",
+            "post": "Post",
+            "more": "More",
+            "about": "About"
+        },
+        "search":{
+            "title":"Search",
+            "inputText": "Search",
+            "model": {
+                "title":"Search Model",
+                "list":{
+                    "all":"ALL",
+                    "post":"Post",
+                    "label":"Label"
+                }
+            }
+        }
+    }
+}
