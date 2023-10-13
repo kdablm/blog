@@ -23,16 +23,16 @@ a {
 }
 
 /* 搜索框主题颜色 */
-.searchTheme.el-dialog {
+.searchTheme.el-dialog,.settingTheme.el-dialog {
     background-color: var(--background-color) !important;
     color: var(--text-color);
 }
 
-.searchTheme .el-dialog__title {
+.searchTheme .el-dialog__title,.settingTheme .el-dialog__title {
     color: var(--text-color) !important;
 }
 
-.searchTheme .el-radio__label {
+.searchTheme .el-radio__label,.settingTheme .el-radio__label {
     color: var(--text-color) !important;
 }
 

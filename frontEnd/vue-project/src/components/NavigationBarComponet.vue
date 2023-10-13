@@ -11,35 +11,19 @@
       </el-col>
       <el-col :span="12">
         <ul class="navbar">
-          <li
-            class="nav_item"
-            @mouseleave="mouserOut(1, $event)"
-            @mouseenter="mouserIn(1, $event)"
-          >
+          <li class="nav_item" @mouseleave="mouserOut(1, $event)" @mouseenter="mouserIn(1, $event)">
             <span :class="{ in: inIndex == 1, out: outIndex == 1 }"></span>
             <span>{{ language.navigationBar.links.home }}</span>
           </li>
-          <li
-            class="nav_item"
-            @mouseleave="mouserOut(2, $event)"
-            @mouseenter="mouserIn(2, $event)"
-          >
+          <li class="nav_item" @mouseleave="mouserOut(2, $event)" @mouseenter="mouserIn(2, $event)">
             <span :class="{ in: inIndex == 2, out: outIndex == 2 }"></span>
             <span>{{ language.navigationBar.links.post }}</span>
           </li>
-          <li
-            class="nav_item"
-            @mouseleave="mouserOut(3, $event)"
-            @mouseenter="mouserIn(3, $event)"
-          >
+          <li class="nav_item" @mouseleave="mouserOut(3, $event)" @mouseenter="mouserIn(3, $event)">
             <span :class="{ in: inIndex == 3, out: outIndex == 3 }"></span>
             <span>{{ language.navigationBar.links.more }}</span>
           </li>
-          <li
-            class="nav_item"
-            @mouseleave="mouserOut(4, $event)"
-            @mouseenter="mouserIn(4, $event)"
-          >
+          <li class="nav_item" @mouseleave="mouserOut(4, $event)" @mouseenter="mouserIn(4, $event)">
             <span :class="{ in: inIndex == 4, out: outIndex == 4 }"></span>
             <span>{{ language.navigationBar.links.about }}</span>
           </li>
@@ -49,46 +33,26 @@
         <ul class="toolBox">
           <!-- 主题切换按钮 -->
           <li class="tool_item">
-            <el-switch
-              v-model="themeStore.isDark"
-              :active-action-icon="MoonNight"
-              :inactive-action-icon="Sunny"
-              style="
+            <el-switch v-model="themeStore.isDark" :active-action-icon="MoonNight" :inactive-action-icon="Sunny" style="
                 --el-switch-on-color: #79bbff;
                 --el-switch-off-color: #eebe77;
-              "
-            />
+              " />
           </li>
           <!-- 搜素按钮 -->
           <li class="tool_item search">
-            <el-button
-              :icon="Search"
-              @click="showSearchDialong()"
-              circle
-              size="small"
-              type="success"
-            />
+            <el-button :icon="Search" @click="showSearchDialong()" circle size="small" type="success" />
           </li>
           <!-- 设置按钮 -->
           <li class="tool_item setting">
             <el-dropdown trigger="click">
               <span class="el-dropdown-link">
-                <el-button
-                  circle
-                  size="small"
-                  :icon="Setting"
-                  type="primary"
-                ></el-button>
+                <el-button circle size="small" :icon="Setting" type="primary"></el-button>
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item @click="languageStore.chagneLanguage(0)"
-                    >中文</el-dropdown-item
-                  >
-                  <el-dropdown-item @click="languageStore.chagneLanguage(1)"
-                    >English</el-dropdown-item
-                  >
-                  <el-dropdown-item>更多设置</el-dropdown-item>
+                  <el-dropdown-item @click="languageStore.chagneLanguage(0)">中文</el-dropdown-item>
+                  <el-dropdown-item @click="languageStore.chagneLanguage(1)">English</el-dropdown-item>
+                  <el-dropdown-item disabled>更多设置</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -97,20 +61,9 @@
       </el-col>
     </el-row>
     <!-- 搜索框 -->
-    <el-dialog
-      v-model="isSearch"
-      :title="language.navigationBar.search.title"
-      class="searchTheme"
-      center
-    >
-      <el-input
-        v-model="searchText"
-        type="search"
-        @search="fn_search()"
-        class="w-50 m-2"
-        :placeholder="language.navigationBar.search.input"
-        clearable
-      >
+    <el-dialog v-model="isSearch" :title="language.navigationBar.search.title" class="searchTheme" center>
+      <el-input v-model="searchText" type="search" @search="fn_search()" class="w-50 m-2"
+        :placeholder="language.navigationBar.search.input" clearable>
         <template #prefix>
           <el-icon class="el-input__icon">
             <search />
@@ -139,7 +92,7 @@
   </div>
 </template>
 <script setup >
-import { computed, reactive, ref, watch } from "vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useThemeStore } from "../stores/theme"; //主题库
 import { useLanguageStore } from "../stores/language"; //语言库
 
@@ -148,9 +101,24 @@ import { Search, Sunny, MoonNight, Setting } from "@element-plus/icons-vue";
 import axios, { Axios } from "axios";
 const themeStore = useThemeStore();
 const languageStore = useLanguageStore();
+// 获取窗口滚距离
+let windowScollTop = ref(0);
+let backgroundColor = ref("transparent");
+let textColor = ref("#ffffff");
+onMounted(() => {
+  window.addEventListener("scroll", () => {
+    windowScollTop.value = window.scrollY || document.documentElement.scrollTo || document.body.scrollTop;
+    if (windowScollTop.value > 100) {
+      backgroundColor.value = "var(--background-color)";
+      textColor.value = "var(--text-color)";
+    } else {
+      backgroundColor.value = ref("transparent");
+      textColor.value = ref("#ffffff");
+    }
+  });
+})
 // 语言
 let language = reactive(languageStore.language);
-
 watch(
   () => languageStore.getLanguageIndex,
   () => {
@@ -184,7 +152,7 @@ function mouserOut(index, e) {
   t = setTimeout(() => {
     inIndex.value = 0;
     outIndex.value = 0;
-  }, 500);
+  }, 600);
   outIndex.value = index;
   outX.value = e.offsetX + "px";
   outY.value = e.offsetY + "px";
@@ -204,19 +172,25 @@ function fn_search() {
   /* 搜索函数处理 */
   isSearch.value = false; //隐藏对话框
 }
+// 搜索框取消按钮函数
 function cancelBtn() {
   isSearch.value = false; //隐藏对话框
 }
 </script>
+
+
 <style scoped>
 * {
   user-select: none;
 }
 
 .navBg {
+  position: sticky;
+  top: 0px;
   width: 100%;
-  color: var(--text-color);
-  background-color: var(--background-color);
+  z-index: 10;
+  color: v-bind(textColor);
+  background-color: v-bind(backgroundColor);
 }
 
 .nav {
@@ -252,7 +226,7 @@ function cancelBtn() {
 }
 
 .nav_item span {
-  color: var(--text-color);
+  color: v-bind(textColor);
 }
 
 .nav_item span {
@@ -372,7 +346,7 @@ function cancelBtn() {
   margin: 0;
 }
 
-.toolBox > .tool_item {
+.toolBox>.tool_item {
   text-align: center;
   font-size: 16px;
   cursor: pointer;
