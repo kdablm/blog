@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <div style="position: relative;height: 95vh;">
+            <div style="position: relative;height: 95vh;z-index: 1;">
                 <div class="topBox">
                     <div>
                         <div class="imageBox">

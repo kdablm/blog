@@ -25,6 +25,7 @@ const themeStore = useThemeStore();
 .navbar {
     position: sticky;
     top: 0px;
+    z-index: 10;
 }
 
 .bg {
