@@ -163,8 +163,49 @@
                                     </div>
                                 </div>
                             </div>
+                            <el-row :gutter="10">
+                                <el-col class="banner_post_item" :span=bannerPost[0] @mouseenter="bannerPostEnter(0)"
+                                    @mouseleave="bannerPostOut">
+                                    <div class="banner_post_item hot">
+                                        <p>热门精选</p>
+                                    </div>
+                                </el-col>
+                                <el-col class="banner_post_item" :span=bannerPost[1] @mouseenter="bannerPostEnter(1)"
+                                    @mouseleave="bannerPostOut">
+                                    <div class="banner_post_item upgrader">
+                                        <p>最近更新</p>
+                                    </div>
+                                </el-col>
+                                <el-col class="banner_post_item" :span=bannerPost[2] @mouseenter="bannerPostEnter(2)"
+                                    @mouseleave="bannerPostOut">
+                                    <div class="banner_post_item mojang">
+                                        <p>技术专栏</p>
+                                    </div>
+                                </el-col>
+                            </el-row>
                         </el-col>
                         <el-col :span="12">
+                            <div class="banner_right_top">
+                                <el-text class="banner_right_top_title">公告</el-text>
+                                <!-- <el-table :row-style="cellStyle"
+                                    :header-cell-style="{ 'background': themeStore.isDark ? '#141414' : '#ffffff', 'color': themeStore.isDark ? '#ffffff' : '#000000' }"
+                                    :data="tableData" style="width: 100%;background-color: var(--background-color);color: var(--text-color);" height="250">
+                                    <el-table-column fixed prop="date" label="Date" width="150" />
+                                    <el-table-column prop="name" label="Name" width="120" />
+                                    <el-table-column prop="state" label="State" width="120" />
+                                    <el-table-column prop="city" label="City" width="320" />
+                                    <el-table-column prop="address" label="Address" width="600" />
+                                    <el-table-column prop="zip" label="Zip" width="120" />
+                                </el-table> -->
+                                <el-table :data="noteTable" :row-style="cellStyle"
+                                    :header-cell-style="{ 'background': themeStore.isDark ? '#141414' : '#ffffff', 'color': themeStore.isDark ? '#ffffff' : '#000000' }"
+                                    height="315"
+                                    style="width: 100%;background-color: var(--background-color);color: var(--text-color);">
+                                    <el-table-column prop="date" label="日期" />
+                                    <el-table-column prop="name" label="发布者" />
+                                    <el-table-column prop="descript" label="描述" />
+                                </el-table>
+                            </div>
                         </el-col>
                     </el-row>
                 </div>
@@ -173,9 +214,7 @@
 
                     </el-col>
                     <el-col :span="8">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum iure enim saepe veritatis quis sed
-                        vitae. Id libero, itaque ut eligendi corrupti repellendus laudantium et ipsa dolorum qui, laborum
-                        ipsum!
+
                     </el-col>
                 </el-row>
             </div>
@@ -183,7 +222,9 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import { useThemeStore } from "../stores/theme"; //主题库
+const themeStore = useThemeStore();
 let str = "It's not how much time you have,it's how you use it.";
 let motto = ref("");
 let strIndex = 0;
@@ -199,6 +240,42 @@ onMounted(() => {
         }, 200);
     }, 1000);
 });
+//鼠标移入效果
+let bannerPost = reactive([8, 8, 8]);
+function bannerPostEnter(index) {
+    bannerPost[0] = 6;
+    bannerPost[1] = 6;
+    bannerPost[2] = 6;
+    bannerPost[index] = 12;
+}
+function bannerPostOut() {
+    bannerPost[0] = 8;
+    bannerPost[1] = 8;
+    bannerPost[2] = 8;
+}
+// 公告表格
+let noteTable = reactive([
+    {
+        date: "2021-01-01",
+        name: "张三",
+        descript: "lorem Ips incorrectly lorem ipsum dolor sit amet, consectetur"
+    }
+])
+// 表格样式
+function cellStyle(row) {
+    if (themeStore.isDark) {
+        return {
+            'background': '#141414',
+            'color': '#ffffff'
+        }
+    } else {
+        return {
+            'background': '#ffffff',
+            'color': '#000000'
+        }
+    }
+}
+
 </script>
 <style scoped >
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Tilt+Prism&display=swap");
@@ -396,7 +473,7 @@ onMounted(() => {
 
 .descript {
     width: calc(100% - 20px);
-    height: 40px;
+    height: 5vh;
     border-radius: 10px;
     background-color: #409EFF;
     display: flex;
@@ -411,7 +488,8 @@ onMounted(() => {
     margin-top: 20px;
 }
 
-.banner_left_top {
+.banner_left_top,
+.banner_right_top {
     width: 100%;
     height: 250px;
     border-radius: 10px;
@@ -419,6 +497,23 @@ onMounted(() => {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+}
+
+.banner_right_top .banner_right_top_title {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--text-color);
+    padding: 10px;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.banner_right_top {
+    height: 315px;
+}
+
+.banner_right_top .weather {
+    flex: 1;
 }
 
 .banner_left_top_eclipse_box {
@@ -467,7 +562,7 @@ onMounted(() => {
     justify-content: space-between;
     transform: rotateZ(-30deg) translateX(100px);
     position: absolute;
-    bottom: 200px;
+    bottom: 30%;
     animation: iconRoll 20s linear infinite;
 }
 
@@ -500,5 +595,30 @@ onMounted(() => {
 .icon_item img {
     width: 70px;
     height: 70px;
+}
+
+.banner_post_item {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all .5s;
+}
+
+.hot {
+    background-color: #f89898;
+}
+
+.upgrader {
+    background-color: #a0cfff;
+}
+
+.mojang {
+    background-color: #67C23A;
 }
 </style>
