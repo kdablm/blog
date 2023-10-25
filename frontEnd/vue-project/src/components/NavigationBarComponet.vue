@@ -109,12 +109,12 @@ let textColor = ref("#ffffff");
 onMounted(() => {
     window.addEventListener("scroll", () => {
         windowScollTop.value = window.scrollY || document.documentElement.scrollTo || document.body.scrollTop;
-        if (windowScollTop.value > 100) {
+        if (windowScollTop.value > 200) {
             backgroundColor.value = "var(--background-color)";
             textColor.value = "var(--text-color)";
         } else {
-            backgroundColor.value = ref("transparent");
-            textColor.value = ref("#ffffff");
+            backgroundColor.value = "transparent";
+            textColor.value = "#ffffff";
         }
     });
 })
