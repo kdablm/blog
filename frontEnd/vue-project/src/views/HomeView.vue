@@ -41,126 +41,12 @@
                                 <div class="banner_left_top_eclipse_box">
                                     <h1>看一看</h1>
                                 </div>
-                                <div class="banner_title">
-                                    我的技术栈
-                                </div>
                                 <div class="icon_group">
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/bxl-spring-boot.png" alt="">
-                                        </div>
-                                        <div class="icon_item" style="background-color: #409EFF;">
-                                            <img src="../assets/img/icon/docker.png" alt="">
-                                        </div>
+                                    <div v-for="item in iconButtlets" :key="item" :style="{ top: `${item.top}px` }"
+                                        :class="['icon_bullet_' + item.status]" class="icon_item">
+                                        <img :src="item.src" alt="icon">
                                     </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item" style="background-color:#E6A23C;">
-                                            <img src="../assets/img/icon/HTML5.png" alt="">
-                                        </div>
 
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/java.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/git.png" alt="">
-                                        </div>
-                                        <div class="icon_item" style="background-color: #79bbff;">
-                                            <img src="../assets/img/icon/jquery.png" alt="">
-                                        </div>
-
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/JavaScript.png" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/linux.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/logo.png" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/mysql.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/Vue.png" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/Webpack.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="https://pinia.vuejs.org/logo.svg" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="https://cn.vitejs.dev/logo.svg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/bxl-spring-boot.png" alt="">
-                                        </div>
-                                        <div class="icon_item" style="background-color: #409EFF;">
-                                            <img src="../assets/img/icon/docker.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item" style="background-color:#E6A23C;">
-                                            <img src="../assets/img/icon/HTML5.png" alt="">
-                                        </div>
-
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/java.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/git.png" alt="">
-                                        </div>
-                                        <div class="icon_item" style="background-color: #79bbff;">
-                                            <img src="../assets/img/icon/jquery.png" alt="">
-                                        </div>
-
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/JavaScript.png" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/linux.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/logo.png" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/mysql.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/Vue.png" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="../assets/img/icon/Webpack.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="icon_list">
-                                        <div class="icon_item">
-                                            <img src="https://pinia.vuejs.org/logo.svg" alt="">
-                                        </div>
-                                        <div class="icon_item">
-                                            <img src="https://cn.vitejs.dev/logo.svg" alt="">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <el-row :gutter="10">
@@ -187,31 +73,26 @@
                         <el-col :span="12">
                             <div class="banner_right_top">
                                 <el-text class="banner_right_top_title">公告</el-text>
-                                <!-- <el-table :row-style="cellStyle"
-                                    :header-cell-style="{ 'background': themeStore.isDark ? '#141414' : '#ffffff', 'color': themeStore.isDark ? '#ffffff' : '#000000' }"
-                                    :data="tableData" style="width: 100%;background-color: var(--background-color);color: var(--text-color);" height="250">
-                                    <el-table-column fixed prop="date" label="Date" width="150" />
-                                    <el-table-column prop="name" label="Name" width="120" />
-                                    <el-table-column prop="state" label="State" width="120" />
-                                    <el-table-column prop="city" label="City" width="320" />
-                                    <el-table-column prop="address" label="Address" width="600" />
-                                    <el-table-column prop="zip" label="Zip" width="120" />
-                                </el-table> -->
                                 <el-table :data="noteTable" :row-style="cellStyle"
                                     :header-cell-style="{ 'background': themeStore.isDark ? '#141414' : '#ffffff', 'color': themeStore.isDark ? '#ffffff' : '#000000' }"
                                     height="315"
                                     style="width: 100%;background-color: var(--background-color);color: var(--text-color);">
-                                    <el-table-column prop="date" label="日期" />
-                                    <el-table-column prop="name" label="发布者" />
+                                    <el-table-column prop="date" width="120" label="日期" />
+                                    <el-table-column prop="name" width="100" label="发布者" />
                                     <el-table-column prop="descript" label="描述" />
                                 </el-table>
                             </div>
                         </el-col>
                     </el-row>
                 </div>
-                <el-row>
-                    <el-col :span="16">
+                <section>
 
+                </section>
+                <el-row>
+                    <!-- 文章列表 -->
+                    <el-col :span="16">
+                        <ClassificationComponent></ClassificationComponent>
+                        <PostListComponent />
                     </el-col>
                     <el-col :span="8">
 
@@ -224,6 +105,10 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { useThemeStore } from "../stores/theme"; //主题库
+import ClassificationComponent from "../components/ClassificationComponent.vue"
+// import PostItemComponent from "../components/PostItemComponent.vue"
+import PostListComponent from "../components/PostListComponent.vue";
+import IconBullet from "@/pojo/IconBullent.js"
 const themeStore = useThemeStore();
 let str = "It's not how much time you have,it's how you use it.";
 let motto = ref("");
@@ -259,6 +144,11 @@ let noteTable = reactive([
         date: "2021-01-01",
         name: "张三",
         descript: "lorem Ips incorrectly lorem ipsum dolor sit amet, consectetur"
+    },
+    {
+        date: "2021-01-01",
+        name: "张三",
+        descript: "lorem Ips incorrectly lorem ipsum dolor sit amet, consectetur"
     }
 ])
 // 表格样式
@@ -275,7 +165,30 @@ function cellStyle(row) {
         }
     }
 }
-
+// 图标弹幕
+let iconButtlets = reactive([]);
+function generateIcon() {
+    let icon = new IconBullet();
+    icon.src = new URL(`../assets/img/icon/${icon.name}.png`, import.meta.url).href;
+    iconButtlets.push(icon);
+}
+function bulletRunning(time) {
+    iconButtlets.forEach((e, i) => {
+        if (e.status == "waiting") {
+            setTimeout(() => {
+                e.status = "running";
+            }, time)
+        } else if (e.status == "done") {
+            iconButtlets.splice(i, 1);
+        }
+    })
+}
+generateIcon();
+bulletRunning();
+setInterval(() => {
+    generateIcon();
+    bulletRunning(Math.floor(Math.random() * 400));
+}, 300)
 </script>
 <style scoped >
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Tilt+Prism&display=swap");
@@ -380,7 +293,7 @@ function cellStyle(row) {
     }
 }
 
-/* 遮盖 */
+/* 座右铭遮盖效果 */
 .userMotto::before {
     content: "";
     position: absolute;
@@ -475,7 +388,7 @@ function cellStyle(row) {
     width: calc(100% - 20px);
     height: 5vh;
     border-radius: 10px;
-    background-color: #409EFF;
+    background-color: var(--classificationBox-background-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -544,45 +457,17 @@ function cellStyle(row) {
     margin-left: 50px;
 }
 
-.banner_left_top:hover .banner_title {
-    display: none;
-}
-
-.banner_title {
-    color: var(--text-color);
-    font-size: 30px;
-    font-weight: bold;
-    padding: 20px 100px;
-}
-
+/* 技术栈图标 */
 .icon_group {
     z-index: 0;
-    display: flex;
-    width: 1800px;
-    justify-content: space-between;
-    transform: rotateZ(-30deg) translateX(100px);
-    position: absolute;
-    bottom: 30%;
-    animation: iconRoll 20s linear infinite;
-}
-
-@-webkit-keyframes iconRoll {
-    0% {
-        transform: rotateZ(-30deg) translateX(100px);
-    }
-
-    100% {
-        transform: rotateZ(-30deg) translateX(-815px);
-    }
-}
-
-.icon_list>.icon_item:nth-child(2) {
-    transform: translateX(70px);
+    width: 100%;
+    z-index: 0;
 }
 
 .icon_item {
-    width: 100px;
-    height: 100px;
+    position: absolute;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -593,8 +478,35 @@ function cellStyle(row) {
 }
 
 .icon_item img {
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
+}
+
+/* 图标的弹幕效果 */
+.icon_bullet_waiting {
+    left: 100%;
+    transform: translate(100%, 0);
+}
+
+.icon_bullet_done {
+    left: 0%;
+    transform: translate(-100%, 0);
+}
+
+.icon_bullet_running {
+    animation: bulletRunning 5s linear forwards;
+}
+
+@-webkit-keyframes bulletRunning {
+    from {
+        left: 100%;
+        transform: translate(100%, 0);
+    }
+
+    to {
+        left: 0%;
+        transform: translate(-100%, 0);
+    }
 }
 
 .banner_post_item {
@@ -620,5 +532,9 @@ function cellStyle(row) {
 
 .mojang {
     background-color: #67C23A;
+}
+
+.el-table {
+    --el-table-row-hover-bg-color: #a0cfff;
 }
 </style>

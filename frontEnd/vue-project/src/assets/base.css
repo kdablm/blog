@@ -6,6 +6,9 @@
     --background-color-light: #ffffff;
     --background-color-dark: #141414;
     /* 导航栏样式 */
-    --navbar-hover-color-light:#79bbff;
-    --navbar-hover-color-dark:#eebe77;
+    --navbar-hover-color-light: #79bbff;
+    --navbar-hover-color-dark: #eebe77;
+    /* 分类栏背景 */
+    --classificationBox-background-color-light: #409EFF;
+    --classificationBox-background-color-dark: #141414;
 }
