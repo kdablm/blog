@@ -1,4 +1,4 @@
-<h1 align="center">ByteWizard个人博客系统</h1>
+<h1 align="center">ByteWizard</h1>
 
 # 环境
 1. 项目基于Vue3+springboot
